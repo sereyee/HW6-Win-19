@@ -41,10 +41,6 @@ def find_dates(filename):
 
 def find_emails(filename):
     """ Return a list of valid emails in the text file with the given filename """
-    # has at least one non-whitespace character, followed by an at-sign, followed by at least one more non-whitespace character.
-    # does not contain any special characters in the local part or domain part (except .)
-    # may contain letters or numbers in the local part as well as in domain part. 
-
     matches = []
     reg = re.compile(r"[\w\.]+@[\w\.]+")
     for line in open(filename, 'r'):
@@ -55,7 +51,32 @@ def find_emails(filename):
 
 def find_phoneNumbers(filename):
     """ Return a list of valid phone numbers in the text file with the given filename """
-    pass
+    """
+    xxx/xxx-xxxx (eg, 206/782-8410)
+    xxx.xxx.xxxx (eg, 206.782.8410)
+    xxx xxx xxxx (eg, 206 782 8410)
+    (xxx) xxx-xxxx (eg, (206) 782-8410)
+    xxx-xxx-xxxx (eg, 206-782-8410 )
+    xxxxxxxxxx (eg, 2067828410)
+    """
+    matches = []
+    reg1 = re.compile(r"(\d{3}([\-\.\s]?)\d{3}\2?\d{4})")
+    reg2 = re.compile(r"\d{3}\/\d{3}\-\d{4}")
+    reg3 = re.compile(r"\(\d{3}\)\s\d{3}\-\d{4}")
+    for line in open(filename, 'r'):
+        # reg1
+        match_tuples = reg1.findall(line)
+        if match_tuples:
+            line_matches, _ = zip(*match_tuples)
+            matches.extend(line_matches)
+        #reg2
+        line_matches = reg2.findall(line)
+        matches.extend(line_matches)
+        #reg3
+        line_matches = reg3.findall(line)
+        matches.extend(line_matches)
+    return matches
+
 
 ## Extra credit
 def count_word(filename, word):
