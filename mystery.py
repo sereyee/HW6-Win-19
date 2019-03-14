@@ -41,7 +41,16 @@ def find_dates(filename):
 
 def find_emails(filename):
     """ Return a list of valid emails in the text file with the given filename """
-    pass
+    # has at least one non-whitespace character, followed by an at-sign, followed by at least one more non-whitespace character.
+    # does not contain any special characters in the local part or domain part (except .)
+    # may contain letters or numbers in the local part as well as in domain part. 
+
+    matches = []
+    reg = re.compile(r"[\w\.]+@[\w\.]+")
+    for line in open(filename, 'r'):
+        line_matches = reg.findall(line)
+        matches.extend(line_matches)
+    return matches
 
 
 def find_phoneNumbers(filename):
