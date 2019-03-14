@@ -36,22 +36,6 @@ def find_dates(filename):
         if match_tuples:
             line_matches, _ = zip(*match_tuples)
             matches.extend(line_matches)
-
-    #mm/dd/yy or mm/dd/yyyy
-    
-    # initialize a list of dates to an empty list
-    
-    # read the lines from the file into a list
-    
-    # define the regular expression
-    
-    # loop through the list of lines from the file
-    
-        # get the list of items that match the regular expression from the current line
-    
-        # add the list of items that matched to the list of dates found so far
-    
-    # return the list of dates
     return matches
 
 
