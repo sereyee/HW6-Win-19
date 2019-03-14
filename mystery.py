@@ -51,14 +51,7 @@ def find_emails(filename):
 
 def find_phoneNumbers(filename):
     """ Return a list of valid phone numbers in the text file with the given filename """
-    """
-    xxx/xxx-xxxx (eg, 206/782-8410)
-    xxx.xxx.xxxx (eg, 206.782.8410)
-    xxx xxx xxxx (eg, 206 782 8410)
-    (xxx) xxx-xxxx (eg, (206) 782-8410)
-    xxx-xxx-xxxx (eg, 206-782-8410 )
-    xxxxxxxxxx (eg, 2067828410)
-    """
+
     matches = []
     reg1 = re.compile(r"(\d{3}([\-\.\s]?)\d{3}\2?\d{4})")
     reg2 = re.compile(r"\d{3}\/\d{3}\-\d{4}")
@@ -86,7 +79,12 @@ def count_word(filename, word):
         word -- the word to look for
         return -- a count of the number of times the word or its plural appears in the file 
     """
-    pass
+    matches = []
+    reg = re.compile(r"\b[{}|{}]{}s?\b".format(word[0], word[0].upper(), word[1:]))
+    for line in open(filename, 'r'):
+        line_matches = reg.findall(line)
+        matches.extend(line_matches)
+    return len(matches)
         
 
 ## Do not modify the code below
