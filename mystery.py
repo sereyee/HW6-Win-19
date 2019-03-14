@@ -29,7 +29,15 @@ def find_dates(filename):
         filename -- the name of the file to read from
         return -- the list of valid dates found in the file
     """
-    pass
+    matches = []
+    reg = re.compile(r"((?:[0-9]{2}|[0-9]{1})([\/\.\-])(?:[0-9]{2}|[0-9]{1})\2(?:[0-9]{4}|[0-9]{2}))")
+    for line in open(filename, 'r'):
+        match_tuples = reg.findall(line)
+        if match_tuples:
+            line_matches, _ = zip(*match_tuples)
+            matches.extend(line_matches)
+
+    #mm/dd/yy or mm/dd/yyyy
     
     # initialize a list of dates to an empty list
     
@@ -39,11 +47,12 @@ def find_dates(filename):
     
     # loop through the list of lines from the file
     
-    	# get the list of items that match the regular expression from the current line
+        # get the list of items that match the regular expression from the current line
     
-    	# add the list of items that matched to the list of dates found so far
+        # add the list of items that matched to the list of dates found so far
     
     # return the list of dates
+    return matches
 
 
 def find_emails(filename):
@@ -147,6 +156,7 @@ if __name__ == "__main__":
         print("Count word for shoud return 10 and it returned: " + str(count))
     
     
+
 
 
 
